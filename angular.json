@@ -119,6 +119,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "corso"
+    }
+  },
+  "defaultProject": "corso",
+  "cli": {
+    "analytics": false
+  }
 }

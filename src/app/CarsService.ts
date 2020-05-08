@@ -2,19 +2,30 @@ import { Car } from './models/Car';
 
 export class CarsService {
 
-    cars: Car[] = [{ id: 1, prezzo: 2000, nome: 'BMW' }, { id: 2, prezzo: 30000, nome: 'BENZ' }];
-
     constructor() { }
 
+    macchine: Car[];
+
     getCars(): Promise<Car[]> {
-        return new Promise((resolve, reject) => {
 
-            setTimeout(() => {
-               // reject(new Error("Errore"))
-               resolve(this.cars) //reject(new Error("Errore"))
-            }, 5000);
+        // return fetch("../assets/cars.json")
+        //     .then(response => response.json());
+        return fetch("../assets/cars.json")
+            .then(response => {
+                return new Promise((resolve) =>
+                    setTimeout(() => {
+                        resolve(response.json())
+                    }, 5000))
+            });
 
-        });
+        // return new Promise((resolve) => {
+
+        //     setTimeout(() => {
+        //         // reject(new Error("Errore"))
+        //         resolve(this.cars) //reject(new Error("Errore"))
+        //     }, 5000);
+
+        // });
 
     }
 

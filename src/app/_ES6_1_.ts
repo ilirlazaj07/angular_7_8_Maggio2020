@@ -57,8 +57,9 @@ const __obj_ = { ...__obj, cognome: 'Bianchi' };
 
 ///////////////////////////////// REST OPERATOR CON GENERICS /////////////////////////////////
 
-function rest<T>(xxx: T, ...tutto_il_resto: T[]) {
+function rest<T>(xxx: T, ...tutto_il_resto: T[]): T[] {
   console.log(tutto_il_resto);
+  return [];
 }
 
 rest<string>('due');

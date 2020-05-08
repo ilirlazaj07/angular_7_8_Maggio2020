@@ -13,10 +13,18 @@ export class AppComponent implements OnInit {
 
   testo: string;
 
+  creaObsDaEventoDOM(domElement, evento): Observable<string> {
+    // Creare un'observable che resta in attesa di eventi su determinati componenti del DOM
+
+    return null;
+  }
+
+
   ngOnInit(): void {
 
-    const observable$ = new Observable((observer: Observer<number>) => {
+    this.creaObsDaEventoDOM(document.querySelector(".componente"), 'click').subscribe({ next: console.log });
 
+    const observable$ = new Observable((observer: Observer<number>) => {
 
       observer.next(0);
 
@@ -27,7 +35,6 @@ export class AppComponent implements OnInit {
 
       setTimeout(() => {
         observer.next(5);
-        observer.error(new Error("Errore"))
       }, 5000);
 
       setTimeout(() => {
@@ -43,21 +50,17 @@ export class AppComponent implements OnInit {
 
     });
 
-    observable$.subscribe({
-
-      error: (errore) => {
-        console.log(errore);
-      },
-
-      next: (valoreEmesso: number) => {
-        console.log(valoreEmesso)
-      },
-
-      complete: () => {
-        console.log("OBSERVABLE COMPLETATA !!!")
-      }
-
-    });
+    /**  observable$.subscribe({
+  
+        error: console.error,
+  
+        next: console.log,
+  
+        complete: () => {
+          console.log("OBSERVABLE COMPLETATA !!!")
+        }
+  
+      }); */
 
 
   }

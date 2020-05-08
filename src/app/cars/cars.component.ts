@@ -36,24 +36,36 @@ export class CarsComponent implements OnInit, OnDestroy {
       (car: Car) => car.id != daCancellare.id
     )
 
-
   }
 
   ngOnInit(): void {
 
-    this.carsService.getCars().then(
-      (questeLeMacchineRIsolte: Car[]) => {
-        this.cars = questeLeMacchineRIsolte;
+    const promOrObs = this.carsService.getCars();
+    if (promOrObs instanceof Promise) {
+      promOrObs.then(
+        (questeLeMacchineRIsolte: Car[]) => {
+          console.log('Adesso è una Promise derivata da un\'Observable');
+          this.cars = questeLeMacchineRIsolte;
 
-        this.cars.map((car: Car) => {
-          car.nome += "_TEST";
-        });
-      },
-      (e) => {
-        console.log(e);
-      }
-    ).catch().finally();
+          this.cars.map((car: Car) => {
+            car.nome += "_TEST";
+          });
+        },
+        (e) => {
+          console.log(e);
+        }
+      ).catch().finally();
+    } else {
+      promOrObs.subscribe({
+        next: (cars: Car[]) => {
+          this.cars = cars;
+          this.cars.map((car: Car) => {
+            car.nome += "_TEST";
+          });
+        }
+      })
 
+    }
     // THIS
 
     setTimeout(

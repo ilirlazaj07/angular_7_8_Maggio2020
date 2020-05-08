@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angu
 import { Car } from 'src/app/models/Car';
 import { CarsService } from 'src/app/CarsService';
 import { Observable, Observer, Subscription } from 'rxjs';
+import { ActivatedRoute, Params } from '@angular/router';
 
 @Component({
   selector: 'app-car',
@@ -10,15 +11,12 @@ import { Observable, Observer, Subscription } from 'rxjs';
 })
 export class CarComponent implements OnInit, OnDestroy {
 
-  @Input()
-  car: Car;
 
-  @Output()
-  cancellazioneEmitter: EventEmitter<Car> = new EventEmitter();
+  car: Car;
 
   sottoscrizioneIntervallo: Subscription;
 
-  constructor(private carsService: CarsService) { }
+  constructor(private carsService: CarsService, private route: ActivatedRoute) { }
 
   ngOnDestroy(): void {
     console.log("Elemento distrutto: " + this.car.nome);
@@ -26,6 +24,14 @@ export class CarComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+
+    this.route.params.subscribe((params: Params) => {
+
+      this.carsService.getCarById(+params['id']).subscribe((car: Car) => {
+        this.car = car;
+      });
+
+    });
 
     const observable$ = new Observable((observer: Observer<number>) => {
 
@@ -47,9 +53,5 @@ export class CarComponent implements OnInit, OnDestroy {
 
   }
 
-  cancellami() {
-    this.cancellazioneEmitter.emit(this.car);
-    console.log("Car " + this.car.id + " in cancellazione !");
-  }
 
 }

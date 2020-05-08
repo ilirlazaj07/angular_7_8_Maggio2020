@@ -1,20 +1,15 @@
-<p *ngIf="valutaTu()" (click)="ascolta($event)" [style.backgroundColor]="'transparent'">{{cars  | json}}</p>
-
 <hr>
 
-<!-- <div style="border-top: 1px solid red ;" *ngFor="let car of cars;
+<div [routerLink]="['/cars', car.id]" style="border-top: 1px solid red ; cursor: pointer;" *ngFor="let car of cars;
  let indice = index;
  let primoElemento = first; 
  let ultimoElemento = last;
  let pari = even;
  let dispari = odd;">
-    Pari: {{pari}} {{indice + 1}} - Macchina:
+   Pari: {{pari}} {{indice + 1}} - Macchina:
 
-   <p [ngClass]="{'pari': pari, 'dispari': dispari}">{{car | json}}</p> =>>> OPERATOR TERNARIO 
-   <p [ngStyle]="{'background-color': pari ? 'red' : 'green'}">{{car | json}}</p>
+   <p>{{car | json}}</p>
 </div>
 
--->
-
-<app-car (cancellazioneEmitter)="cancellaUno($event)" [car]="car" *ngFor="let car of cars"></app-car>
-
+<hr> <hr>
+<router-outlet></router-outlet>

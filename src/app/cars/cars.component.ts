@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Car } from '../models/Car';
 import { CarsService } from '../CarsService';
+import { ActivatedRoute, Data } from '@angular/router';
 
 @Component({
   selector: 'app-cars',
@@ -18,7 +19,7 @@ export class CarsComponent implements OnInit, OnDestroy {
 
   // Cosa sono : Property Binding & Event Binding; 
 
-  constructor(private carsService: CarsService) { }
+  constructor(private route: ActivatedRoute) { }
 
   ngOnDestroy(): void { }
 
@@ -40,32 +41,10 @@ export class CarsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
 
-    const promOrObs = this.carsService.getCars();
-    if (promOrObs instanceof Promise) {
-      promOrObs.then(
-        (questeLeMacchineRIsolte: Car[]) => {
-          console.log('Adesso è una Promise derivata da un\'Observable');
-          this.cars = questeLeMacchineRIsolte;
+    this.route.data.subscribe((data: Data) => {
+      this.cars = data['macchineRisolte'];
+    });
 
-          this.cars.map((car: Car) => {
-            car.nome += "_TEST";
-          });
-        },
-        (e) => {
-          console.log(e);
-        }
-      ).catch().finally();
-    } else {
-      promOrObs.subscribe({
-        next: (cars: Car[]) => {
-          this.cars = cars;
-          this.cars.map((car: Car) => {
-            car.nome += "_TEST";
-          });
-        }
-      })
-
-    }
     // THIS
 
     setTimeout(

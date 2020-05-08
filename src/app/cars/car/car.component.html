@@ -1,1 +1,3 @@
-<div>{{car | json}} <span (click)="cancellami()" style="cursor: pointer;">X</span></div>
+<div>{{car | json}}</div>
+
+<button class="btn btn-info btn-xs" *ngIf="car.id == 1" routerLink="/cars/2">Go to Car 2</button>

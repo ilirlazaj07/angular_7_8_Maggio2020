@@ -1,6 +1,15 @@
 <h1 class="componente">Corso Angular 9</h1>
 <!--<input [(ngModel)]="testo" type="text">
-<p> Testo digitato: {{testo}}</p>
-<button class="btn btn-warning btn-xs">Bootstrap Test</button>
+<p> Testo digitato: {{testo}}</p
+<button (click)="unsubscribe()" class="btn btn-warning btn-xs">Bootstrap Test</button>
 -->
-<app-home></app-home>
+
+<div style="padding: 10px;">
+    <a routerLinkActive="attiva" [routerLinkActiveOptions]="{exact: true}" [routerLink]="['/']">Intro</a> |
+    <a routerLinkActive="attiva" routerLink="../cars">Cars</a> |
+    <a routerLinkActive="attiva" routerLink="/info">Info</a> |
+</div>
+
+MACCHINE: <p>{{macchine | async}}</p>
+
+<router-outlet></router-outlet>
